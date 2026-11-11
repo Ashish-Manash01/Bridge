@@ -1,0 +1,5 @@
+-r requirements.txt
+pytest>=8.3
+pytest-asyncio>=0.24
+cryptography>=43   # scripts/dev_https.py: self-signed certificate for phone testing on your LAN
+pillow>=11         # scripts/make_icons.py

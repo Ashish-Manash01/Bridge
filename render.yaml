@@ -1,0 +1,29 @@
+# Render blueprint: one web service (API + web app + WebSockets) and a Postgres database.
+# Docs: docs/deployment.md
+services:
+  - type: web
+    name: bridge
+    runtime: docker
+    plan: starter            # WebSockets need an always-on instance (not free/sleeping)
+    healthCheckPath: /api/health
+    envVars:
+      - key: BRIDGE_ENV
+        value: production
+      - key: SECRET_KEY
+        generateValue: true
+      - key: DATABASE_URL
+        sync: false          # paste your Postgres URL (postgresql+asyncpg://...)
+      - key: CORS_ORIGINS
+        sync: false          # e.g. https://bridge.onrender.com,https://your-domain.com
+      - key: STT_PROVIDER
+        value: sarvam
+      - key: TRANSLATION_PROVIDER
+        value: sarvam
+      - key: TRANSLATION_FALLBACK_PROVIDER
+        value: mymemory
+      - key: TTS_PROVIDER
+        value: sarvam
+      - key: SARVAM_API_KEY
+        sync: false          # paste your Sarvam key (dashboard.sarvam.ai)
+      - key: MYMEMORY_CONTACT_EMAIL
+        sync: false

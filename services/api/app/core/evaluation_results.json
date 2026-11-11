@@ -1,0 +1,268 @@
+{
+  "generated_at": "2026-11-11T20:17:13+00:00",
+  "providers": {
+    "stt": "sarvam",
+    "translation": "sarvam",
+    "tts": "sarvam"
+  },
+  "languages": {
+    "en": {
+      "status": "automated_pass",
+      "tested_at": "2026-11-11T20:17:13+00:00",
+      "note": "Translation auto-check passed.",
+      "translation": {
+        "ok": true,
+        "cases": [],
+        "note": "source language"
+      },
+      "speech": {
+        "tts": {
+          "ok": true,
+          "bytes": 97888
+        },
+        "stt": {
+          "ok": true,
+          "similarity": 0.95,
+          "heard": "Shall we meet at the library at 5 o'clock tomorrow?"
+        }
+      }
+    },
+    "hi": {
+      "status": "automated_pass",
+      "tested_at": "2026-11-11T20:17:13+00:00",
+      "note": "Translation auto-check passed.",
+      "translation": {
+        "ok": true,
+        "cases": [
+          {
+            "src": "Shall we meet at the library at five o'clock tomorrow?",
+            "out": "कल पाँच बजे पुस्तकालय में मिलते हैं?",
+            "ok": true,
+            "ms": 609
+          },
+          {
+            "src": "Please bring 3 copies of the report for Priya.",
+            "out": "प्रिया के लिए कृपया रिपोर्ट की 3 प्रतियाँ लाएँ।",
+            "ok": true,
+            "ms": 655
+          },
+          {
+            "src": "The bus to Jayanagar leaves from platform 2.",
+            "out": "जयनगर जाने वाली बस प्लेटफॉर्म 2 से प्रस्थान करती है।",
+            "ok": true,
+            "ms": 657
+          },
+          {
+            "src": "क्या हम कल पाँच बजे पुस्तकालय में मिल सकते हैं?",
+            "out": "Can we meet at the library tomorrow at 5 o'clock?",
+            "ok": true,
+            "reverse": true
+          },
+          {
+            "src": "कल meeting है, please slides ready रखना।",
+            "out": "Please have your slides ready for tomorrow's meeting.",
+            "ok": true,
+            "reverse": true
+          }
+        ]
+      },
+      "speech": {
+        "tts": {
+          "ok": true,
+          "bytes": 120466
+        },
+        "stt": {
+          "ok": true,
+          "similarity": 1.0,
+          "heard": "क्या हम कल पाँच बजे पुस्तकालय में मिल सकते हैं?"
+        }
+      }
+    },
+    "kn": {
+      "status": "automated_pass",
+      "tested_at": "2026-11-11T20:17:13+00:00",
+      "note": "Translation auto-check passed.",
+      "translation": {
+        "ok": true,
+        "cases": [
+          {
+            "src": "Shall we meet at the library at five o'clock tomorrow?",
+            "out": "ನಾಳೆ ಐದು ಗಂಟೆಗೆ ಗ್ರಂಥಾಲಯದಲ್ಲಿ ಭೇಟಿಯಾಗೋಣವೇ?",
+            "ok": true,
+            "ms": 610
+          },
+          {
+            "src": "Please bring 3 copies of the report for Priya.",
+            "out": "ಪ್ರಿಯಾಳಿಗೆ ವರದಿಯ ಮೂರು ಪ್ರತಿಗಳನ್ನು ತಂದುಕೊಡಿ.",
+            "ok": true,
+            "ms": 625
+          },
+          {
+            "src": "The bus to Jayanagar leaves from platform 2.",
+            "out": "ಜಯನಗರಕ್ಕೆ ಹೋಗುವ ಬಸ್ಸು 2ನೇ ಪ್ಲಾಟ್‌ಫಾರ್ಮ್‌ನಿಂದ ಹೊರಡುತ್ತದೆ.",
+            "ok": true,
+            "ms": 718
+          },
+          {
+            "src": "ನಾವು ನಾಳೆ ಐದು ಗಂಟೆಗೆ ಗ್ರಂಥಾಲಯದಲ್ಲಿ ಭೇಟಿಯಾಗೋಣವೇ?",
+            "out": "Shall we meet at the library tomorrow at 5 o'clock?",
+            "ok": true,
+            "reverse": true
+          },
+          {
+            "src": "ನಾಳೆ meeting ಇದೆ, slides ready ಮಾಡಿಕೊಳ್ಳಿ.",
+            "out": "Please prepare your slides for the meeting tomorrow.",
+            "ok": true,
+            "reverse": true
+          }
+        ]
+      },
+      "speech": {
+        "tts": {
+          "ok": true,
+          "bytes": 135520
+        },
+        "stt": {
+          "ok": true,
+          "similarity": 1.0,
+          "heard": "ನಾವು ನಾಳೆ ಐದು ಗಂಟೆಗೆ ಗ್ರಂಥಾಲಯದಲ್ಲಿ ಭೇಟಿಯಾಗೋಣವೇ?"
+        }
+      }
+    },
+    "ta": {
+      "status": "automated_pass",
+      "tested_at": "2026-11-11T20:17:13+00:00",
+      "note": "Translation auto-check passed.",
+      "translation": {
+        "ok": true,
+        "cases": [
+          {
+            "src": "Shall we meet at the library at five o'clock tomorrow?",
+            "out": "நாளை ஐந்து மணிக்கு நூலகத்தில் சந்திக்கலாமா?",
+            "ok": true,
+            "ms": 625
+          },
+          {
+            "src": "Please bring 3 copies of the report for Priya.",
+            "out": "பிரியாவிற்காக அறிக்கையின் 3 பிரதிகள் கொண்டு வாருங்கள்.",
+            "ok": true,
+            "ms": 1500
+          },
+          {
+            "src": "The bus to Jayanagar leaves from platform 2.",
+            "out": "ஜयनாகருக்குச் செல்லும் பேருந்து 2ஆவது நடைமேடையில் இருந்து புறப்படுகிறது.",
+            "ok": true,
+            "ms": 687
+          },
+          {
+            "src": "நாளை ஐந்து மணிக்கு நூலகத்தில் சந்திக்கலாமா?",
+            "out": "Shall we meet at the library tomorrow at 5 o'clock?",
+            "ok": true,
+            "reverse": true
+          }
+        ]
+      },
+      "speech": {
+        "tts": {
+          "ok": true,
+          "bytes": 116704
+        },
+        "stt": {
+          "ok": true,
+          "similarity": 0.95,
+          "heard": "நாளை ஐந்து மணிக்கு நூலகத்தில் சந்திக்கலாம்."
+        }
+      }
+    },
+    "te": {
+      "status": "automated_pass",
+      "tested_at": "2026-11-11T20:17:13+00:00",
+      "note": "Translation auto-check passed.",
+      "translation": {
+        "ok": true,
+        "cases": [
+          {
+            "src": "Shall we meet at the library at five o'clock tomorrow?",
+            "out": "రేపు ఐదు గంటలకు గ్రంథాలయంలో కలుద్దామా?",
+            "ok": true,
+            "ms": 608
+          },
+          {
+            "src": "Please bring 3 copies of the report for Priya.",
+            "out": "ప్రియ కోసం నివేదిక యొక్క 3 కాపీలు దయచేసి తీసుకురండి.",
+            "ok": true,
+            "ms": 671
+          },
+          {
+            "src": "The bus to Jayanagar leaves from platform 2.",
+            "out": "జయనగర్‌కు వెళ్ళే బస్సు రెండవ ప్లాట్‌ఫారమ్ నుండి బయలుదేరుతుంది.",
+            "ok": true,
+            "ms": 688
+          },
+          {
+            "src": "మనం రేపు ఐదు గంటలకు గ్రంథాలయంలో కలుద్దామా?",
+            "out": "Shall we meet at the library tomorrow at 5 o'clock?",
+            "ok": true,
+            "reverse": true
+          }
+        ]
+      },
+      "speech": {
+        "tts": {
+          "ok": true,
+          "bytes": 135520
+        },
+        "stt": {
+          "ok": true,
+          "similarity": 1.0,
+          "heard": "మనం రేపు ఐదు గంటలకు గ్రంథాలయంలో కలుద్దామా?"
+        }
+      }
+    },
+    "ml": {
+      "status": "automated_pass",
+      "tested_at": "2026-11-11T20:17:13+00:00",
+      "note": "Translation auto-check passed.",
+      "translation": {
+        "ok": true,
+        "cases": [
+          {
+            "src": "Shall we meet at the library at five o'clock tomorrow?",
+            "out": "നാളെ അഞ്ച് മണിക്ക് ലൈബ്രറിയിൽ കാണാം?",
+            "ok": true,
+            "ms": 625
+          },
+          {
+            "src": "Please bring 3 copies of the report for Priya.",
+            "out": "പ്രിയയ്ക്ക് റിപ്പോർട്ടിന്റെ മൂന്ന് പകർപ്പുകൾ കൊണ്ടുവരുക.",
+            "ok": true,
+            "ms": 656
+          },
+          {
+            "src": "The bus to Jayanagar leaves from platform 2.",
+            "out": "ജയനഗറിലേക്കുള്ള ബസ് പ്ലാറ്റ്ഫോം 2-ൽ നിന്ന് പുറപ്പെടും.",
+            "ok": true,
+            "ms": 703
+          },
+          {
+            "src": "നാളെ അഞ്ചു മണിക്ക് ലൈബ്രറിയിൽ കാണാമോ?",
+            "out": "Can you meet me at the library tomorrow at 5 o'clock?",
+            "ok": true,
+            "reverse": true
+          }
+        ]
+      },
+      "speech": {
+        "tts": {
+          "ok": true,
+          "bytes": 94124
+        },
+        "stt": {
+          "ok": true,
+          "similarity": 0.99,
+          "heard": "നാളെ അഞ്ചുമണിക്ക് ലൈബ്രറിയിൽ കാണാമോ?"
+        }
+      }
+    }
+  }
+}

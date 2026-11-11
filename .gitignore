@@ -1,0 +1,24 @@
+# secrets
+.env
+.env.local
+services/api/.certs/
+
+# python
+services/api/.venv/
+__pycache__/
+*.pyc
+services/api/*.db
+services/api/*.db-*
+.pytest_cache/
+
+# web
+apps/web/node_modules/
+apps/web/.next/
+apps/web/out/
+apps/web/test-results/
+apps/web/playwright-report/
+apps/web/next-env.d.ts
+*.tsbuildinfo
+
+# local Claude Code tooling (skills, settings)
+.claude/

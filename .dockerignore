@@ -1,0 +1,10 @@
+**/node_modules
+**/.next
+apps/web/out
+apps/web/test-results
+**/.venv
+**/__pycache__
+**/*.db
+**/*.db-*
+services/api/.certs
+.env
