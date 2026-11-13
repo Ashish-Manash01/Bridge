@@ -6,10 +6,18 @@ const MOCK = process.env.E2E_MOCK === "1";
 const KANNADA = MOCK ? /^\[kn\]/ : /[ಀ-೿]/;
 const DEVANAGARI = MOCK ? /^\[hi\]/ : /[ऀ-ॿ]/;
 
-async function createRoom(page: Page, name: string, languageLabel: RegExp) {
+// Languages are chosen by their stable code (option value), not by visible label:
+// WebKit reports Indic option text differently, and labels can change with copy.
+async function chooseLanguage(page: Page, selectLabel: string, code: string) {
+  const select = page.getByLabel(selectLabel);
+  await expect(select.locator(`option[value="${code}"]`)).toHaveCount(1); // waits for /api/config
+  await select.selectOption(code);
+}
+
+async function createRoom(page: Page, name: string, language: string) {
   await page.goto("/new");
   await page.getByLabel("Your name").fill(name);
-  await page.getByLabel("Your language").selectOption({ label: await optionLabel(page, "Your language", languageLabel) });
+  await chooseLanguage(page, "Your language", language);
   await page.getByRole("checkbox", { name: /I understand/ }).check();
   await page.getByRole("button", { name: "Create room" }).click();
   await page.waitForURL(/\/room\?id=/);
@@ -18,22 +26,13 @@ async function createRoom(page: Page, name: string, languageLabel: RegExp) {
   return code;
 }
 
-async function optionLabel(page: Page, selectLabel: string, re: RegExp) {
-  await expect(page.getByLabel(selectLabel).locator("option", { hasText: re })).toHaveCount(1);
-  const options = await page.getByLabel(selectLabel).locator("option").allTextContents();
-  const match = options.find((o) => re.test(o));
-  if (!match) throw new Error(`No option matching ${re} in ${options.join(", ")}`);
-  return match;
-}
-
-async function joinRoom(browser: Browser, code: string, name: string, languageLabel: RegExp) {
+async function joinRoom(browser: Browser, code: string, name: string, language: string) {
   const ctx = await browser.newContext();
   const page = await ctx.newPage();
   await page.goto(`/join?code=${code}`);
   await expect(page.getByText("You're invited to")).toBeVisible();
   await page.getByLabel("Your name").fill(name);
-  const label = "Language you want to read and hear";
-  await page.getByLabel(label).selectOption({ label: await optionLabel(page, label, languageLabel) });
+  await chooseLanguage(page, "Language you want to read and hear", language);
   await page.getByRole("checkbox", { name: /I understand/ }).check();
   await page.getByRole("button", { name: "Join conversation" }).click();
   await page.waitForURL(/\/room\?id=/);
@@ -49,10 +48,10 @@ async function typeMessage(page: Page, text: string) {
 }
 
 test("English ↔ Kannada exchange, then a Hindi participant joins", async ({ page: a, browser }) => {
-  const code = await createRoom(a, "Asha", /English/);
+  const code = await createRoom(a, "Asha", "en");
   expect(code).toMatch(/^[A-Z0-9]{6}$/);
 
-  const b = await joinRoom(browser, code, "Ravi", /Kannada/);
+  const b = await joinRoom(browser, code, "Ravi", "kn");
   await expect(a.getByText(/Live · 2 people/)).toBeVisible();
 
   // A (English) → B sees Kannada translation and can open the original.
@@ -71,7 +70,7 @@ test("English ↔ Kannada exchange, then a Hindi participant joins", async ({ pa
   if (!MOCK) await expect(aCard.locator("p[lang='en']")).not.toHaveText(/[ಀ-೿]/);
 
   // Third participant: Hindi.
-  const c = await joinRoom(browser, code, "Meera", /Hindi/);
+  const c = await joinRoom(browser, code, "Meera", "hi");
   await typeMessage(a, "Please bring your notebooks.");
   const cCard = c.getByRole("article", { name: /Asha, spoke English/ }).last();
   await expect(cCard.locator("p[lang='hi']")).toHaveText(DEVANAGARI);
@@ -83,8 +82,8 @@ test("English ↔ Kannada exchange, then a Hindi participant joins", async ({ pa
 });
 
 test("guest can ask the speaker to repeat and the speaker is notified", async ({ page: a, browser }) => {
-  const code = await createRoom(a, "Asha", /English/);
-  const b = await joinRoom(browser, code, "Ravi", /Kannada/);
+  const code = await createRoom(a, "Asha", "en");
+  const b = await joinRoom(browser, code, "Ravi", "kn");
   await typeMessage(a, "Good morning everyone.");
   const card = b.getByRole("article", { name: /Asha/ });
   await expect(card.locator("p[lang='kn']")).toHaveText(KANNADA);
@@ -93,7 +92,7 @@ test("guest can ask the speaker to repeat and the speaker is notified", async ({
 });
 
 test("viewing a room never requests the microphone", async ({ page, browser }) => {
-  const code = await createRoom(page, "Asha", /English/);
+  const code = await createRoom(page, "Asha", "en");
   const ctx = await browser.newContext({ permissions: [] });
   const p = await ctx.newPage();
   await p.addInitScript(() => {
@@ -114,8 +113,8 @@ test("viewing a room never requests the microphone", async ({ page, browser }) =
 });
 
 test("owner ends an ephemeral room for everyone", async ({ page: a, browser }) => {
-  const code = await createRoom(a, "Asha", /English/);
-  const b = await joinRoom(browser, code, "Ravi", /Kannada/);
+  const code = await createRoom(a, "Asha", "en");
+  const b = await joinRoom(browser, code, "Ravi", "kn");
   await a.getByRole("button", { name: "More" }).click();
   await a.getByRole("menuitem", { name: /Room settings/ }).click();
   await a.getByRole("button", { name: "End conversation for everyone" }).click();
