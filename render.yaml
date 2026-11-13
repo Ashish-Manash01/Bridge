@@ -1,20 +1,25 @@
-# Render blueprint: one web service (API + web app + WebSockets) and a Postgres database.
-# Docs: docs/deployment.md
+# Render Blueprint: one web service (API + web app + WebSockets on one origin)
+# plus a managed PostgreSQL database. Deploy: Render dashboard → New → Blueprint
+# → select this repo → paste SARVAM_API_KEY when prompted. Details: docs/deployment.md
 services:
   - type: web
     name: bridge
     runtime: docker
-    plan: starter            # WebSockets need an always-on instance (not free/sleeping)
+    region: singapore        # closest Render region to India
+    plan: starter            # always-on; free instances sleep and drop WebSockets
     healthCheckPath: /api/health
+    autoDeploy: true
     envVars:
       - key: BRIDGE_ENV
         value: production
       - key: SECRET_KEY
         generateValue: true
       - key: DATABASE_URL
-        sync: false          # paste your Postgres URL (postgresql+asyncpg://...)
-      - key: CORS_ORIGINS
-        sync: false          # e.g. https://bridge.onrender.com,https://your-domain.com
+        fromDatabase:
+          name: bridge-db
+          property: connectionString
+      # CORS_ORIGINS is not needed: the API serves the web app from the same
+      # origin. Add it only if you host the web app elsewhere.
       - key: STT_PROVIDER
         value: sarvam
       - key: TRANSLATION_PROVIDER
@@ -24,6 +29,14 @@ services:
       - key: TTS_PROVIDER
         value: sarvam
       - key: SARVAM_API_KEY
-        sync: false          # paste your Sarvam key (dashboard.sarvam.ai)
+        sync: false          # prompted on first deploy (dashboard.sarvam.ai)
       - key: MYMEMORY_CONTACT_EMAIL
-        sync: false
+        sync: false          # optional: raises the free backup-translation quota
+
+databases:
+  - name: bridge-db
+    region: singapore
+    plan: basic-256mb        # use "free" to try it out (Render deletes free databases after 30 days)
+    databaseName: bridge
+    user: bridge
+    ipAllowList: []          # only reachable from Render services
