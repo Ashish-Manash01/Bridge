@@ -66,7 +66,8 @@ test("English ↔ Kannada exchange, then a Hindi participant joins", async ({ pa
   // B (Kannada) → A sees English.
   await typeMessage(b, "ಸರಿ, ನಾನು ಐದು ಗಂಟೆಗೆ ಬರುತ್ತೇನೆ.");
   const aCard = a.getByRole("article", { name: /Ravi, spoke Kannada/ });
-  await expect(aCard.locator("p[lang='en']")).toHaveText(/[A-Za-z]{3,}/);
+  // Mock translations look like "[en] <original>"; real ones are English words.
+  await expect(aCard.locator("p[lang='en']")).toHaveText(MOCK ? /^\[en\]/ : /[A-Za-z]{3,}/);
   if (!MOCK) await expect(aCard.locator("p[lang='en']")).not.toHaveText(/[ಀ-೿]/);
 
   // Third participant: Hindi.

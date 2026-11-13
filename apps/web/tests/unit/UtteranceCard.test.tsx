@@ -132,4 +132,13 @@ describe("UtteranceCard", () => {
     expect(screen.getByText(/Delivered in/)).toHaveTextContent("English ✓");
     expect(screen.getByText(/Delivered in/)).toHaveTextContent("Hindi (failed)");
   });
+
+  it("shows the original (not an endless spinner) for messages sent before I joined, with a Translate action", () => {
+    const actions = renderCard({ ...base, processing_status: "complete", translations: [] });
+    expect(screen.getByText("Where is the library?")).toBeInTheDocument();
+    expect(screen.getByText(/Not translated yet/)).toBeInTheDocument();
+    expect(screen.queryByText(/Translating/)).not.toBeInTheDocument();
+    fireEvent.click(screen.getByRole("button", { name: /Translate into/ }));
+    expect(actions.onRetryTranslation).toHaveBeenCalledWith(expect.objectContaining({ id: "u1" }), "kn");
+  });
 });

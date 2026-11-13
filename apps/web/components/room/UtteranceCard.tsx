@@ -83,15 +83,21 @@ export const UtteranceCard = memo(function UtteranceCard({
         </Badge>
       );
     }
-  } else {
+  } else if (pending) {
     main = (
       <span className="inline-flex items-center gap-2 text-muted">
         <Dots label="Translating" /> Translating…
       </span>
     );
+  } else {
+    // Sent before this person joined or changed language: no translation exists yet.
+    main = u.original_text;
+    mainLang = u.source_language ?? myLang;
+    status = <Badge tone="neutral">Not translated yet · showing original</Badge>;
   }
 
-  const showOriginalBlock = !mine && !sameLanguage && !!u.original_text && translation?.quality_status !== "failed";
+  const showOriginalBlock =
+    !mine && !sameLanguage && !!u.original_text && !!translation && translation.quality_status !== "failed";
 
   return (
     <article

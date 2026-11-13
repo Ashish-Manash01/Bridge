@@ -10,7 +10,8 @@ export default defineConfig({
   fullyParallel: false,
   retries: process.env.CI ? 1 : 2,
   workers: 1,
-  reporter: [["list"]],
+  // In CI, "github" turns failures into public annotations on the job page.
+  reporter: process.env.CI ? [["github"], ["list"]] : [["list"]],
   use: {
     baseURL: process.env.E2E_BASE_URL ?? "http://localhost:3000",
     // Tracing captures screenshots, which crashed the Chromium renderer on the
