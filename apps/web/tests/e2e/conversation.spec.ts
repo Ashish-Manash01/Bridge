@@ -10,7 +10,17 @@ const DEVANAGARI = MOCK ? /^\[hi\]/ : /[ऀ-ॿ]/;
 // WebKit reports Indic option text differently, and labels can change with copy.
 async function chooseLanguage(page: Page, selectLabel: string, code: string) {
   const select = page.getByLabel(selectLabel);
-  await expect(select.locator(`option[value="${code}"]`)).toHaveCount(1); // waits for /api/config
+  try {
+    await expect(select.locator(`option[value="${code}"]`)).toHaveCount(1, { timeout: 15_000 }); // waits for /api/config
+  } catch (err) {
+    // Diagnostics for CI: which options rendered, and what the server says.
+    const options = await select.locator("option").evaluateAll((os) => os.map((o) => (o as HTMLOptionElement).value));
+    const code6 = new URL(page.url()).searchParams.get("code");
+    const preview = code6 ? await (await page.request.get(`/api/rooms/preview/${code6}`)).text() : "n/a";
+    const config = await (await page.request.get("/api/config")).text();
+    throw new Error(`Option "${code}" missing. Rendered options: [${options}]. URL: ${page.url()}. Preview: ${preview}. Config languages: ${config.slice(config.indexOf('"languages"'), config.indexOf('"languages"') + 160)}
+${err}`);
+  }
   await select.selectOption(code);
 }
 
