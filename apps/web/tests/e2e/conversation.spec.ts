@@ -61,7 +61,7 @@ test("English ↔ Kannada exchange, then a Hindi participant joins", async ({ pa
   await expect(bCard).toBeVisible();
   await expect(bCard.locator("p[lang='kn']")).toHaveText(KANNADA);
   await bCard.getByRole("button", { name: /Original \(English\)/ }).click();
-  await expect(bCard.getByText("Shall we meet at the library at five o'clock?")).toBeVisible();
+  await expect(bCard.getByText("Shall we meet at the library at five o'clock?", { exact: true })).toBeVisible();
 
   // B (Kannada) → A sees English.
   await typeMessage(b, "ಸರಿ, ನಾನು ಐದು ಗಂಟೆಗೆ ಬರುತ್ತೇನೆ.");

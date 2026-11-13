@@ -37,6 +37,9 @@ export default function CreateRoomPage() {
   const [voice, setVoice] = useState(true);
   const [summaries, setSummaries] = useState(false);
   const [allowed, setAllowed] = useState<string[]>([]);
+  // Only send a language restriction if the host actually customised it; otherwise the
+  // server allows every enabled language (avoids racing the list's initial fill).
+  const [allowedTouched, setAllowedTouched] = useState(false);
   const [consent, setConsent] = useState(false);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<ApiError | null>(null);
@@ -75,7 +78,7 @@ export default function CreateRoomPage() {
         transcript_retention_mode: retention,
         voice_playback_enabled: voice,
         summaries_enabled: summaries,
-        allowed_languages: allowedFinal,
+        allowed_languages: allowedTouched ? allowedFinal : undefined,
       });
       sessions.set(s);
       prefs.set({ display_name: displayName.trim(), preferred_language: language, output_mode: outputMode });
@@ -143,7 +146,10 @@ export default function CreateRoomPage() {
                       const on = allowed.includes(l.code) || l.code === language;
                       return (
                         <label key={l.code} className={`flex min-h-11 cursor-pointer items-center gap-2 rounded-xl border px-3 text-sm font-medium has-[:focus-visible]:outline has-[:focus-visible]:outline-2 ${on ? "border-primary bg-primary-soft text-primary" : "border-line-strong text-ink-2"}`}>
-                          <input type="checkbox" className="sr-only" checked={on} disabled={l.code === language} onChange={(e) => setAllowed((a) => (e.target.checked ? [...a, l.code] : a.filter((x) => x !== l.code)))} />
+                          <input type="checkbox" className="sr-only" checked={on} disabled={l.code === language} onChange={(e) => {
+                            setAllowedTouched(true);
+                            setAllowed((a) => (e.target.checked ? [...a, l.code] : a.filter((x) => x !== l.code)));
+                          }} />
                           {l.native_name}
                         </label>
                       );
